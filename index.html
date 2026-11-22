@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أكاديمية التخدير التفاعلية 3D | النسخة الكاملة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+
+    <!-- شريط التنقل العلوي -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-heart-pulse pulse-icon"></i>
+            <span>Anes<strong>3D</strong> Pro</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#hero" class="active">الرئيسية</a></li>
+            <li><a href="#studio-3d">مختبر 3D</a></li>
+            <li><a href="#capno-monitor">محاكي الكابنوغراف الحي</a></li>
+            <li><a href="#lectures">المنهج الكامل</a></li>
+            <li><a href="#comparison-matrix">مقارنة الأدوية</a></li>
+            <li><a href="#calculator">حاسبة الجرعات</a></li>
+            <li><a href="#quiz-section">الاختبار</a></li>
+        </ul>
+        <button id="theme-toggle" class="btn-icon" title="تغيير المظهر">
+            <i class="fa-solid fa-sun"></i>
+        </button>
+    </nav>
+
+    <!-- القسم الافتتاحي -->
+    <header id="hero" class="hero-section">
+        <div class="hero-content">
+            <span class="badge"><i class="fa-solid fa-stethoscope"></i> الدليل التفاعلي المتكامل للتدريب الصيفي في صالة العمليات</span>
+            <h1>منصة التخدير الشاملة بتقنية <span class="gradient-text">3D والمحاكاة الحية</span></h1>
+            <p>تفريغ كامل ومبسط لكورس التخدير (أدوية التخدير، موجات الكابنوغراف الحية، عربة التخدير، التخدير النصفي، والتخفيف العملي) مدعوم بمجسمات 3D، شاشة مراقبة تفاعلية، حاسبة جرعات، وبنك أسئلة.</p>
+            <div class="hero-buttons">
+                <a href="#studio-3d" class="btn-primary"><i class="fa-solid fa-cube"></i> استوديو 3D</a>
+                <a href="#capno-monitor" class="btn-secondary"><i class="fa-solid fa-wave-square"></i> محاكي الموجات الحي</a>
+            </div>
+            <div class="stats-bar">
+                <div class="stat"><strong>6</strong><span>محاور رئيسية</span></div>
+                <div class="stat"><strong>8</strong><span>موجات كابنوغراف حية</span></div>
+                <div class="stat"><strong>15</strong><span>سؤال تطبيقي</span></div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div id="hero-3d-container"></div>
+            <div class="controls-hint"><i class="fa-solid fa-hand-pointer"></i> اسحب لتدوير المجسم • استخدم البكرة للتكبير</div>
+        </div>
+    </header>
+
+    <!-- استوديو المجسمات ثلاثية الأبعاد التفاعلية -->
+    <section id="studio-3d" class="section-container">
+        <div class="section-header">
+            <h2><i class="fa-solid fa-vr-cardboard"></i> مختبر المجسمات ثلاثية الأبعاد (Interactive 3D Lab)</h2>
+            <p>تحكم في مجسمات الأدوية والأجهزة والتشريح 360 درجة</p>
+        </div>
+
+        <div class="studio-wrapper">
+            <div class="studio-sidebar">
+                <button class="model-btn active" data-model="propofol">
+                    <i class="fa-solid fa-vial"></i>
+                    <div><strong>أمبولة Propofol 1%</strong><span>المستحلب الحليبي الأبيض (20ml)</span></div>
+                </button>
+                <button class="model-btn" data-model="machine">
+                    <i class="fa-solid fa-lungs"></i>
+                    <div><strong>عربة التخدير 3D</strong><span>المبخرات، الفلوميتر، وكيس الخزان</span></div>
+                </button>
+                <button class="model-btn" data-model="vaporizers">
+                    <i class="fa-solid fa-wind"></i>
+                    <div><strong>مبخرات الغازات Vaporizers</strong><span>Isoflurane (بنفسجي) vs Sevoflurane (أصفر)</span></div>
+                </button>
+                <button class="model-btn" data-model="spine">
+                    <i class="fa-solid fa-bone"></i>
+                    <div><strong>العمود الفقري والتخدير النصفي</strong><span>مستوى الحقن L3-L4 وحد الأمان T4</span></div>
+                </button>
+                <button class="model-btn" data-model="syringe">
+                    <i class="fa-solid fa-syringe"></i>
+                    <div><strong>محاكاة تخفيف الأدوية</strong><span>سرنجة 5ml (تجزئة التركيز لـ 10mg/ml)</span></div>
+                </button>
+            </div>
+
+            <div class="studio-viewport">
+                <div id="main-3d-canvas"></div>
+                <div class="viewport-overlay">
+                    <div>
+                        <h3 id="model-title">أمبولة بروبوفول (Propofol 200mg/20ml)</h3>
+                        <p id="model-desc">يتميز بلونه الأبيض الحليبي (Milky). التركيز القياسي: كل 1 مل يحتوي على 10 ملجم. يعمل على تنشيط مستقبلات GABA-A في الدماغ.</p>
+                    </div>
+                    <div class="viewport-actions">
+                        <button id="btn-reset-cam" class="btn-sm"><i class="fa-solid fa-rotate-right"></i> ضبط الزاوية</button>
+                        <button id="btn-toggle-spin" class="btn-sm"><i class="fa-solid fa-play"></i> تدوير/إيقاف</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- شاشة مراقبة الكابنوغراف الحية (Live Capnography Monitor) -->
+    <section id="capno-monitor" class="section-container">
+        <div class="section-header">
+            <h2><i class="fa-solid fa-heart-pulse"></i> محاكي شاشة الكابنوغراف الحية (Live Capnography Monitor)</h2>
+            <p>اختر الحالة السريرية لمشاهدة شكل الموجة وهي تُرسم في الوقت الفعلي على شاشة العمليات مع التشخيص والتصرف الفوري</p>
+        </div>
+
+        <div class="monitor-wrapper">
+            <div class="monitor-controls">
+                <button class="wave-btn active" data-wave="normal">1. الموجة الطبيعية (Normal)</button>
+                <button class="wave-btn" data-wave="shark">2. زعنفة القرش (Shark Fin)</button>
+                <button class="wave-btn" data-wave="curare">3. ثلمة الكوراري (Curare Cleft)</button>
+                <button class="wave-btn" data-wave="rebreathing">4. ارتجاع CO2 (Rebreathing)</button>
+                <button class="wave-btn" data-wave="hypo">5. نقص التهوية (Hypoventilation)</button>
+                <button class="wave-btn" data-wave="hyper">6. فرط التهوية (Hyperventilation)</button>
+                <button class="wave-btn" data-wave="mh">7. فرط الحرارة الخبيث (MH)</button>
+                <button class="wave-btn" data-wave="disconnect">8. انفصال الدائرة / مريء (Loss)</button>
+            </div>
+
+            <div class="monitor-screen">
+                <div class="monitor-top-bar">
+                    <span class="mon-badge">GE Carestation Monitor • Sidestream Capnography</span>
+                    <div class="mon-vitals">
+                        <div class="vital-box green">
+                            <small>ETCO2 (mmHg)</small>
+                            <strong id="mon-etco2">38</strong>
+                        </div>
+                        <div class="vital-box cyan">
+                            <small>FiCO2 (Inspired)</small>
+                            <strong id="mon-fico2">0</strong>
+                        </div>
+                        <div class="vital-box yellow">
+                            <small>RR (br/min)</small>
+                            <strong id="mon-rr">14</strong>
+                        </div>
+                    </div>
+                </div>
+                <canvas id="capno-canvas" width="800" height="260"></canvas>
+                <div class="monitor-diagnosis">
+                    <h4 id="wave-title">الموجة الطبيعية (Normal Capnogram - Phases I, II, III, IV)</h4>
+                    <p id="wave-explanation">Phase I: بداية الزفير من المساحة الميتة (Dead space = 0). Phase II: صعود سريع لخليط الغازات. Phase III: الهضبة السنخية (Alveolar Plateau) ونقيس منها ETCO2 الطبيعي (35-45 mmHg). Phase IV: هبوط سريع للصفر عند الشهيق.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم المحاضرات والتفريغ الشامل + شريط البحث -->
+    <section id="lectures" class="section-container">
+        <div class="section-header">
+            <h2><i class="fa-solid fa-layer-group"></i> المنهج الكامل (محاضرة بمحاضرة)</h2>
+            <p>ابحث عن أي دواء أو مصطلح، أو تصفح المحاضرات واضغط على أي بطاقة لفتح النافذة التفصيلية</p>
+        </div>
+
+        <div class="search-bar-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="lecture-search" placeholder="ابحث هنا (مثال: بروبوفول، كيتامين، MAC، أتراكوريوم، فينتانيل، APL)...">
+        </div>
+
+        <div class="tabs-nav">
+            <button class="tab-btn active" data-tab="all">الكل</button>
+            <button class="tab-btn" data-tab="lec1">1. أدوية التحريض والغازات</button>
+            <button class="tab-btn" data-tab="lec2">2. المرخيات والأفيونات والمهدئات</button>
+            <button class="tab-btn" data-tab="lec3">3. موجات الكابنوغراف</button>
+            <button class="tab-btn" data-tab="lec4">4. عربة التخدير</button>
+            <button class="tab-btn" data-tab="lec5">5. التخدير النصفي</button>
+            <button class="tab-btn" data-tab="lec6">6. التخفيف والتطبيق العملي</button>
+        </div>
+
+        <div id="lectures-grid" class="cards-grid"></div>
+    </section>
+
+    <!-- مصفوفة المقارنة السريعة في صالة العمليات -->
+    <section id="comparison-matrix" class="section-container">
+        <div class="section-header">
+            <h2><i class="fa-solid fa-table-columns"></i> الجداول المرجعية السريعة لصالة العمليات</h2>
+            <p>مقارنة تأثير أدوية التحريض على أجهزة الجسم + اختيار الدواء الأنسب لكل نوع عملية</p>
+        </div>
+
+        <div class="table-responsive">
+            <table class="pro-table">
+                <thead>
+                    <tr>
+                        <th>الدواء (Induction Agent)</th>
+                        <th>النبض (HR)</th>
+                        <th>ضغط الدم (MAP)</th>
+                        <th>التنفس (Ventilation)</th>
+                        <th>توسع القصبات (Bronchodilation)</th>
+                        <th>ضغط الدماغ (ICP)</th>
+                        <th>الاستخدام المفضل</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Propofol</strong></td>
+                        <td><span class="tag-neutral">0 / ↓</span></td>
+                        <td><span class="tag-down">↓↓ يخفض الضغط</span></td>
+                        <td><span class="tag-down">↓↓ يثبط</span></td>
+                        <td><span class="tag-neutral">لا يوسع</span></td>
+                        <td><span class="tag-down">↓↓ يقلل ICP</span></td>
+                        <td>عمليات اليوم الواحد، مضاد للقيء، عمليات العيون والأعصاب</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Thiopental</strong></td>
+                        <td><span class="tag-up">↑ انعكاسي</span></td>
+                        <td><span class="tag-down">↓↓ يخفض الضغط</span></td>
+                        <td><span class="tag-down">↓↓ يثبط</span></td>
+                        <td><span class="tag-down">قد يسبب تشنج</span></td>
+                        <td><span class="tag-down">↓↓ يقلل ICP</span></td>
+                        <td>جراحات الأعصاب (قلوي جداً - خطر داخل الشريان)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Etomidate</strong></td>
+                        <td><span class="tag-neutral">0 مستقر</span></td>
+                        <td><span class="tag-neutral">0 مستقر</span></td>
+                        <td><span class="tag-down">↓ خفيف</span></td>
+                        <td><span class="tag-neutral">0 لا تأثير</span></td>
+                        <td><span class="tag-down">↓↓ يقلل ICP</span></td>
+                        <td>مرضى القلب وعدم استقرار الدورة الدموية (يثبط الكظرية)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ketamine</strong></td>
+                        <td><span class="tag-up">↑↑ يرفع النبض</span></td>
+                        <td><span class="tag-up">↑↑ يرفع الضغط</span></td>
+                        <td><span class="tag-neutral">يحافظ عليه نسبياً</span></td>
+                        <td><span class="tag-up">↑↑ يوسع القصبات</span></td>
+                        <td><span class="tag-up">↑↑ يرفع ICP</span></td>
+                        <td>الربو (Asthma)، الأطفال، مرضى الصدمة وهبوط الضغط</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- حاسبة جرعات التخدير السريرية -->
+    <section id="calculator" class="section-container">
+        <div class="section-header">
+            <h2><i class="fa-solid fa-calculator"></i> حاسبة الجرعات والتخفيف (Clinical Dose Calculator)</h2>
+            <p>أدخل وزن المريض لحساب الجرعة بالمليجرام وعدد السيسيهات (ml) المطلوب سحبها</p>
+        </div>
+
+        <div class="calc-box">
+            <div class="calc-inputs">
+                <div class="input-group">
+                    <label>وزن المريض (كجم - kg):</label>
+                    <input type="number" id="patient-weight" value="70" min="1" max="250">
+                </div>
+                <div class="input-group">
+                    <label>الفئة العمرية:</label>
+                    <select id="patient-type">
+                        <option value="adult">بالغ (Adult)</option>
+                        <option value="pediatric">طفل (Pediatric)</option>
+                    </select>
+                </div>
+            </div>
+            <div id="calc-results" class="calc-results-grid"></div>
+        </div>
+    </section>
+
+    <!-- قسم الكويزات والاختبار التفاعلي -->
+    <section id="quiz-section" class="section-container">
+        <div class="section-header">
+            <h2><i class="fa-solid fa-clipboard-check"></i> الاختبار التفاعلي الشامل (15 سؤالاً)</h2>
+            <p>اختبر فهمك لكل محاضرات البلاي ليست مع تصحيح فوري وشرح علمي</p>
+        </div>
+
+        <div class="quiz-container">
+            <div class="quiz-header">
+                <span id="quiz-progress">السؤال 1 من 15</span>
+                <span id="quiz-score">النتيجة: 0</span>
+            </div>
+            <div id="quiz-body">
+                <h3 id="question-text">جاري تحميل السؤال...</h3>
+                <div id="options-container" class="options-list"></div>
+                <div id="explanation-box" class="explanation hidden"></div>
+            </div>
+            <div class="quiz-footer" style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+                <button id="next-question-btn" class="btn-primary hidden">السؤال التالي <i class="fa-solid fa-arrow-left"></i></button>
+                <button id="restart-quiz-btn" class="btn-secondary hidden"><i class="fa-solid fa-rotate"></i> إعادة الاختبار</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- المراجع الطبية المعتمدة -->
+    <section id="references" class="section-container">
+        <div class="section-header">
+            <h2><i class="fa-solid fa-book-open"></i> المراجع والكتب الخارجية المعتمدة للتوسع</h2>
+            <p>روابط مباشرة لأشهر المراجع العالمية في علم التخدير والفارماكولوجي</p>
+        </div>
+        <div class="refs-grid">
+            <a href="https://www.asahq.org/" target="_blank" class="ref-card">
+                <i class="fa-solid fa-building-columns"></i>
+                <div><h4>American Society of Anesthesiologists (ASA)</h4><span>البروتوكولات القياسية لمراقبة المريض وإدارة مجرى الهواء</span></div>
+            </a>
+            <a href="https://www.openanesthesia.org/" target="_blank" class="ref-card">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <div><h4>OpenAnesthesia Encyclopedia</h4><span>موسوعة التخدير المفتوحة (شرح الفارما وموجات الكابنوغراف)</span></div>
+            </a>
+            <a href="https://litfl.com/capnography-waveform-analysis/" target="_blank" class="ref-card">
+                <i class="fa-solid fa-wave-square"></i>
+                <div><h4>LITFL - Capnography Waveform Analysis</h4><span>الدليل السريري الشامل لتحليل جميع موجات الكابنوغراف</span></div>
+            </a>
+            <a href="https://www.nysora.com/techniques/neuraxial-and-perineuraxial-techniques/spinal-anesthesia/" target="_blank" class="ref-card">
+                <i class="fa-solid fa-syringe"></i>
+                <div><h4>NYSORA - Spinal Anesthesia Guide</h4><span>أطلس التخدير النصفي والموضعي مدعوم بالصور التشريحية</span></div>
+            </a>
+        </div>
+    </section>
+
+    <!-- النافذة المنبثقة التفاعلية -->
+    <div id="detail-modal" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+            <div id="modal-body-content"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>منصة <strong>Anes3D Pro</strong> التعليمية التفاعلية — مبنية على سلسلة كورس التدريب الصيفي في التخدير (أ. خالد العايد)</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

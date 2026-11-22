@@ -1,0 +1,157 @@
+/* تنسيقات إضافية لشاشة الكابنوغراف الحية والجدول والبحث */
+.monitor-wrapper {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 1.5rem;
+}
+
+.monitor-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.wave-btn {
+    padding: 11px 14px;
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    border-radius: 10px;
+    text-align: right;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.wave-btn.active, .wave-btn:hover {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.monitor-screen {
+    background: #030712;
+    border: 2px solid #1e293b;
+    border-radius: 16px;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.monitor-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.mon-badge {
+    color: #94a3b8;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+}
+
+.mon-vitals {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.vital-box {
+    background: #0f172a;
+    padding: 6px 14px;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 90px;
+}
+
+.vital-box small { display: block; font-size: 0.7rem; color: #94a3b8; }
+.vital-box strong { font-size: 1.4rem; font-family: 'JetBrains Mono', monospace; }
+.vital-box.green strong { color: #10b981; }
+.vital-box.cyan strong { color: #00d2ff; }
+.vital-box.yellow strong { color: #f59e0b; }
+
+#capno-canvas {
+    width: 100%;
+    height: 240px;
+    background: radial-gradient(circle, #091326, #020617);
+    border-radius: 10px;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.monitor-diagnosis {
+    margin-top: 1rem;
+    padding: 0.9rem 1.1rem;
+    background: rgba(16, 185, 129, 0.08);
+    border-right: 4px solid #10b981;
+    border-radius: 8px;
+}
+
+.monitor-diagnosis h4 { color: #10b981; margin-bottom: 4px; }
+.monitor-diagnosis p { color: #cbd5e1; font-size: 0.9rem; }
+
+/* شريط البحث */
+.search-bar-box {
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+    position: relative;
+}
+
+.search-bar-box i {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary);
+}
+
+.search-bar-box input {
+    width: 100%;
+    padding: 13px 45px 13px 16px;
+    border-radius: 30px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-main);
+    font-size: 1rem;
+}
+
+/* الجدول المقارن */
+.table-responsive {
+    overflow-x: auto;
+    background: var(--bg-card);
+    border-radius: 18px;
+    border: 1px solid var(--border);
+}
+
+.pro-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 750px;
+}
+
+.pro-table th, .pro-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    text-align: right;
+}
+
+.pro-table th {
+    background: rgba(0, 210, 255, 0.1);
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.tag-up { color: #10b981; font-weight: 700; }
+.tag-down { color: #ef4444; font-weight: 700; }
+.tag-neutral { color: #94a3b8; font-weight: 700; }
+
+@media (max-width: 900px) {
+    .monitor-wrapper { grid-template-columns: 1fr; }
+}
